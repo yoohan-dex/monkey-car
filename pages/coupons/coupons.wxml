@@ -1,0 +1,42 @@
+<!--pages/coupons/coupons.wxml-->
+<view class="container-wrap">
+  <view class="items-container">
+      <block wx:for="{{ coupons$ }}">
+        <view data-id="{{ item }}" data-index="{{ index }}" class="item" bindtap="onItemTap">
+          <view class="item-content">
+            <view wx:if="{{item.isUseful}}" class="check"></view>
+            <view wx:else class="check-expire"></view>
+            
+              <view class="item-box">
+                <view wx:if="{{item.isUseful}}" class="item-text item-special">
+                  <text>{{item.value}}元</text>
+                </view>
+                <view wx:else class="item-text item-special-expire">
+                  <text>{{item.value}}元</text>
+                </view>
+                
+              </view>
+            <view class="item-box">
+              <view wx:if="{{item.isUseful}}" class="item-text item-info">
+                 <text>{{item.text}}</text>
+              </view>
+              <view wx:else class="item-text item-info-expire">
+                 <text>{{item.text}}</text>
+              </view>
+              <view wx:if="{{item.isUseful}}" class="item-text item-date">
+                <text>{{item.date}}</text>
+              </view>
+              <view wx:else class="item-text item-date">
+                <text>{{item.state}}</text>
+              </view>
+            </view>
+
+                
+          </view>
+        </view>
+      </block>
+      <text style="color: white;" wx:if="{{!coupons$}}">
+        没有拼车券
+      </text>
+  </view>
+</view>

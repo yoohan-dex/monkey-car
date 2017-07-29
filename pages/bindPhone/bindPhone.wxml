@@ -1,0 +1,25 @@
+<!--pages/bindPhone/bindPhone.wxml-->
+
+<view class="common-container">
+    <text wx:if="{{isRegistered}}" class="form-title">重新绑定手机</text>
+    <text wx:else class="form-title">绑定手机</text>
+    <form bindsubmit="formSubmit" bindreset="formReset" class="phone-form">
+        <input name="input" type="number" placeholder="请输入绑定手机号码" bindinput="onPhoneChange"/>
+        <input name="input" type="number" placeholder="请输入验证码" bindinput="onValidChange"/>
+
+        <view class="button-group">
+            <button wx:if="{{seconds > 0}}" type="primary" plain bindtap="onValid" hover-class="main-button-press">
+            {{ seconds }}
+            </button>
+            <button wx:else type="primary" plain bindtap="onValid" hover-class="main-button-press">
+            获取验证码
+            </button>
+            <button type="primary" bindtap="onConfirmPhone" hover-class="main-button-press">
+            确定
+            </button>
+        </view>
+        <text wx:if="{{!isRegistered}}" class="footer">
+        第一次拼车需要绑定手机号码，用于司机与您联系
+        </text>
+    </form>
+</view>

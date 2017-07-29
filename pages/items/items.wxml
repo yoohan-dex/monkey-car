@@ -1,0 +1,87 @@
+<!-- pages/items/items.wxml -->
+<view class="container-wrap">
+  <view class="items-container">
+    <text class="item-indication" wx:if="{{succeed}}">拼车成功的订单</text>
+    <block wx:for="{{ succeed }}" wx:key="succeed">
+      <view data-id="{{ item.id }}" data-type="succeed" data-index="{{ index }}" class="item" bindtap="onItemTap"
+            hover-class="main-item-press">
+        <view class="item-content">
+          <view class="item-box">
+            <view class="item-text">{{item.end}}</view>
+            <view class="item-text">{{item.time}}</view>
+          </view>
+          <view class="item-box">
+            <view class="item-text">已付 {{item.price}} 元</view>
+            <view class="item-text">已定 {{item.book}}个位</view>
+          </view>
+        </view>
+      </view>
+    </block>
+    <text class="item-indication" wx:if="{{matching}}">拼车中的订单</text>
+    <block wx:for="{{ matching }}" wx:key="matching">
+      <view data-id="{{ item.id }}" data-type="matching" data-index="{{ index }}" class="item" bindtap="onItemTap"
+            hover-class="main-item-press">
+        <view class="item-content">
+          <view class="item-box">
+            <view class="item-text">{{item.end}}</view>
+            <view class="item-text">{{item.time}}</view>
+          </view>
+          <view class="item-box">
+            <view class="item-text">已付 {{item.price}} 元</view>
+            <view class="item-text">已定 {{item.book}}个位</view>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <text class="item-indication" wx:if="{{finish}}">已完成的订单</text>
+    <block wx:for="{{ finish }}" wx:key="finish">
+      <view data-index="{{ index }}" class="item" data-id="{{ item.id }}" data-type="finish" bindtap="onItemTap"
+            hover-class="main-item-press">
+        <view class="item-content">
+          <view class="item-box">
+            <view class="item-text">{{item.end}}</view>
+            <view class="item-text">{{item.time}}</view>
+          </view>
+          <view class="item-box">
+            <view class="item-text">付 {{item.price}} 元</view>
+            <view class="item-text">定 {{item.book}}个位</view>
+          </view>
+        </view>
+      </view>
+    </block>
+    <text class="item-indication" wx:if="{{cancelled}}">已取消的订单</text>
+    <block wx:for="{{ cancelled }}" wx:key="cancelled">
+      <view data-index="{{ index }}" class="item"
+            hover-class="main-item-press">
+        <view class="item-content">
+          <view class="item-box">
+            <view class="item-text">{{item.date}}</view>
+            <view class="item-text">{{item.mark}}</view>
+          </view>
+          <view class="item-box">
+            <view class="item-text">{{item.end}}</view>
+          </view>
+          <view class="item-box">
+            <view class="item-text">已付 {{item.price}} 元</view>
+            <view class="item-text">{{item.state}}</view>
+          </view>
+          <view class="item-box">
+            <view class="item-text">退回代金券 {{item.coupon}} 元</view>
+            <view class="item-text">退回现金 {{item.money}} 元</view>
+          </view>
+        </view>
+      </view>
+    </block>
+
+
+
+    <text class="without-items" wx:if="{{!matching && !succeed && !cancelled && !finish && count === 4}}">
+      当前没有订单哦
+    </text>
+    <text class="without-items" wx:if="{{!matching && !succeed && !cancelled && !finish && count !== 4}}">
+      正在获取订单
+    </text>
+
+  </view>
+</view>

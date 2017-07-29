@@ -1,0 +1,23 @@
+/* pages/bindPhone/bindPhone.wxss */
+.common-container {
+    position: absolute;
+    background: #FDFDFD;
+    width: 100%;
+    height: 100%;
+    
+}
+
+.common-container form {
+    padding: 20rpx 15rpx;
+}
+.common-container form .footer {
+    text-align: center;
+    display: block;
+}
+
+.form-title {
+    display: block;
+    color: #D1754D;
+    font-size: 45rpx;
+    margin: 50rpx 30rpx 20rpx;
+}

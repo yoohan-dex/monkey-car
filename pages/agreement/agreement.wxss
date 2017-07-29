@@ -1,0 +1,22 @@
+.common-container {
+    position: absolute;
+    background: #FDFDFD;
+    width: 100%;
+    height: 100%;
+}
+.common-container text {
+  padding: 20rpx;
+  display: inline-block;
+  color: #333;
+  font-size: 28rpx;
+  line-height: 1.3;
+}
+
+
+
+.form-title {
+    display: block;
+    color: #D1754D;
+    font-size: 45rpx;
+    margin: 50rpx 30rpx 20rpx;
+}

@@ -1,0 +1,101 @@
+/* pages/coupons/coupons.wxss */
+.items-container {
+    padding: 30rpx;
+}
+.item-indication {
+    display: inline-block;
+    margin-bottom: 20rpx;
+    width: 100%;
+    padding: 0 0 10rpx 20rpx;
+    color: #FDFDFD;
+    font-size: 40rpx;
+    border-bottom: solid 1px #FDFDFD;
+    height: 100%;
+}
+
+.item {
+    background: #FDFDFD;
+    width: 100%;
+    margin-bottom: 30rpx;
+    box-shadow: 1rpx 4rpx 20rpx 0 rgba(0, 0, 0, 0.4);
+    border-top-right-radius: 20rpx;
+    border-bottom-right-radius: 20rpx;
+}
+.item-content {
+    padding: 45rpx 40rpx;
+    display: flex;
+    justify-content: space-between;
+    height: 200rpx;
+    overflow: hidden;
+}
+.check {
+    background: lightblue;
+    height: 200%;
+    float: left;
+    width: 10%;
+    right: 0;
+    margin-right: 20rpx;
+    transform: translate(0, -30px);
+}
+.check-expire {
+    background: #95989A;
+    height: 200%;
+    float: left;
+    width: 10%;
+    right: 0;
+    margin-right: 20rpx;
+    transform: rotate(-45deg);
+}
+
+.items-container::after,
+.items-container::before {
+    content: ' ';
+    display: block;
+    border-radius: 50%;
+    width: 50rpx;
+    height: 50rpx;
+    position: absolute;
+}
+.items-container::before {
+    left: 8rpx;
+    top: 8rpx;
+    background: #D1754D;
+    box-shadow:  -1rpx -1rpx 0rpx 0 rgba(0, 0, 0, 0.2) inset;
+}
+.items-container::after {
+    left: 20rpx;
+    width: 30rpx;
+    height: 30rpx;
+    top: 20rpx;
+    background: #F1F1F1;
+    box-shadow: 1rpx 4rpx 20rpx 0 rgba(0, 0, 0, 0.4), -5rpx -5rpx 10rpx 0 rgba(0, 0, 0, 0.2) inset;
+}
+
+.item-special text {
+    font-size: 80rpx;
+    color: #D1754D;
+}
+.item-info text{
+    font-size: 30rpx;
+    color: #D1754D;
+}
+.item-special-expire text {
+    font-size: 80rpx;
+    color: #95989A;
+}
+.item-info-expire text{
+    font-size: 30rpx;
+    color: #95989A;
+}
+.item-box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.item .item-text {
+    font-size: 30rpx;
+    color: #95989A;
+    display: block;
+}

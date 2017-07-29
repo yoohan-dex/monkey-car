@@ -1,0 +1,69 @@
+<view class="container-wrap">
+  <view class="items-container">
+    <view wx:if="{{items}}" class="item-indication">
+      <picker mode="selector" bindchange="onLocationChange" value="{{location}}" range="{{location$}}" range-key="area">
+            {{location$[location].area}} 附近
+        </picker>
+    </view>
+    <view wx:if="{{!items && error}}"class="item-indication">
+      <picker mode="selector" bindchange="onLocationChange" value="{{location}}" range="{{location$}}" range-key="area">
+        {{location$[location].area}} 附近
+      </picker>
+      <text class="error-text">{{error}}</text>
+    </view>
+    
+    <block wx:for="{{ items }}" wx:key="{{key}}">
+      <view data-id="{{ item }}" data-index="{{ index }}" class="item" bindtap="onItemTap">
+        <view class="item-content">
+          <view class="item-box">
+            <view class="item-text">{{item.end}}</view>
+            <view class="item-text">{{item.time}}</view>
+          </view>
+          <view class="item-box">
+            <view class="item-text">{{item.scale}}人拼 {{item.price}} 元／位</view>
+            <view class="item-text">剩余 {{item.left}} 个位</view>
+          </view>
+          <view class="item-box">
+            <view class="item-text"></view>
+            <view class="item-text">从 {{item.start}} 上车</view>
+          </view>
+        </view>
+      </view>
+      <view class="item-back" style="{{ isOpen[index]}}">
+        <view class="item-back-content">
+          <view animation="{{ itemBox[index] }}">
+            <form bindsubmit="bookItem" data-index="{{index}}" report-submit>
+              <view class="item-box">
+                <view class="item-back-text">
+                  <block wx:for="{{item.passengers}}" wx:for-item="passenger">
+                    <image mode="aspectFit" src="{{passenger.avatar}}"></image>
+                  </block>
+                  <block wx:for="{{[1, 2, 3]}}" wx:for-index="seat" wx:key="ii">
+                    <image wx:if="{{book[index] - seat >0}}" class="user-avatar" mode="aspectFit" src="{{avatarUrl}}"></image>
+                  </block>
+                </view>
+                <view class="item-back-text">
+                  <picker mode="selector" value="{{leftText}}" bindchange="onBook" data-index="{{index}}"
+                          range="{{leftText$[index]}}">
+                    <text class="match-button">{{ book[index] == 0 ? "一起拼" : "选择人数" }}</text>
+                  </picker>
+                </view>
+              </view>
+              <view class="item-box book-item" hidden="{{book[index] == 0 || isChoosing[index] == false}}">
+                <view class="item-back-text">
+                  <picker wx:if="{{coupons$}}" bindchange="onCouponsChange" range="{{coupons$}}" data-index="{{index}}" range-key="text">
+                    <text class="small-text">{{detract[index] !== 0 ? '' : '拼车券'}} {{detract[index] !== 0 ? coupons$[coupons[index]].text : ''}}</text>
+                  </picker>
+                  <text wx:else class="coupons-without">当前没有可用拼车券</text>
+                </view>
+                <view class="item-back-text">
+                  <button form-type="submit" class="match-button">确定下单</button>
+                </view>
+              </view>
+            </form>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>

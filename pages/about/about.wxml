@@ -1,0 +1,17 @@
+<!--pages/about/about.wxml-->
+<view class="common-container">
+    <text class="form-title" bindtap="phonecall" data-phone="18934214291">乘客客服专线<text class="text-line" >18934214291</text></text>
+    <text class="form-title">乘客客服微信<text class="text-line">DSPC400</text></text>
+    <text class="form-title">商务合作<text class="text-line">林先生</text></text>
+
+    <text bindtap="phonecall" data-phone="18320377434" class="text-line">
+      手机： 18320377434       
+    </text>
+    <text class="text-line">
+      邮箱： lyx@dashengpinche.com       
+    </text>
+    <view class="logo">
+      <image mode="aspectFit" src="../../assets/logo.png"></image>
+      <text>广州极最互联网科技有限公司</text>
+    </view>
+</view>

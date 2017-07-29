@@ -1,0 +1,254 @@
+<!--pages/detail/detail.wxml-->
+<view class="container">
+  <view wx:if="{{!ready || busy}}" class="loading">
+    <view class="loading-box">
+        <image mode="aspectFit" src="../../assets/wait.png"></image>
+    </view>
+    <view class="loading-text">俺老孙来也～～</view>
+  </view>
+  <view wx:if="{{ready && !busy}}" class="container-info">
+    <view wx:if="{{itemType === 'matching'}}" class="container-info-message">
+      <text>{{ downCount }}</text>
+      <text>倒计时</text>
+      <text>系统正在努力拼车</text>
+    </view>
+
+    <view wx:if="{{item.state === 1 && itemType === 'succeed'}}" class="container-info-message">
+      <text>{{ downCount }}</text>
+      <text>倒计时</text>
+      <text>拼车成功，分配司机中</text>
+    </view>
+
+    <view wx:if="{{item.state === 2}}" class="container-info-message">
+      <text>{{ downCount }}</text>
+      <text>倒计时</text>
+      <text>司机已经接单，等待出发</text>
+    </view>
+    <view wx:if="{{item.state === 3}}" class="container-info-message">
+      <text>{{ downCount }}</text>
+      <text>倒计时</text>
+      <text>有人取消了拼车，您是否愿意继续拼车</text>
+    </view>
+
+    <view wx:if="{{item.state === 4}}" class="container-info-message">
+      <text class="haveReceive">司机已经接到人</text>
+    </view>
+    <view wx:if="{{item.state === 5}}" class="container-info-message">
+      <text class="haveReceive">司机已经送达</text>
+    </view>
+    <view wx:if="{{item.state === 6 || item.state === 7}}" wx:key="action" class="container-evaluate">
+        <text class="evaluate-title">已经送达</text>
+        <text wx:if="{{item.state === 6}}">评价一下司机吧</text>
+        <text class="padTop" wx:if="{{item.state === 7}}">已评价</text>
+        <block wx:for="{{rateType}}" wx:for-index="idx" wx:for-item="type" wx:key="{{type}}">
+            <view class="item-line">
+            <view>{{rateTypeChinese[idx]}}</view>
+            <view class="item-line-score">
+                <block wx:for="{{scores}}" wx:for-item="i" wx:key="{{i}}">
+                    <image wx:if="{{rates[type] >= i}}" bindtap="rate" data-type="{{type}}" data-score="{{i}}" mode="aspectFill" src="../../assets/sco.png"></image>
+                    <view class="without-rate" wx:else bindtap="rate" data-type="{{type}}" data-score="{{i}}"><view></view></view>
+                </block>
+            </view>
+            </view>
+        </block>
+        
+        <input wx:if="{{item.state === 6}}" placeholder="输入对司机的评价" bindinput="onComment" placeholder-style="color: #ddd;" class="evaluate-string"/>
+        <text>{{rates.comment}}</text>
+    </view>
+    <view wx:if="{{item.state === 8}}" class="container-complaint">
+      <text class="evaluate-title">投诉处理中</text>
+      <text>投诉原因</text>
+      <block wx:for="{{item.disputedInfos}}" wx:for-item="info" wx:key="info">
+        <view class="passenger-line-left">
+            <image mode="aspectFit" src="{{info.headImgUrl}}"></image>
+            <text>{{info.dispute_reason}}</text>
+        </view>
+      </block>
+      
+    </view>
+    <view wx:if="{{item.state === 9}}" class="container-complaint">
+      <text class="evaluate-title">投诉处理完毕</text>
+      <text>处理结果</text>
+      <view class="dispute-line">
+        <text>{{item.disputedInfo.dispute_result}}</text>
+        <text>退返现金 {{item.disputedInfo.refund_accounts}} 元</text>
+        <text>退返拼车券 {{item.disputedInfo.refund_voucher}} 元</text>
+      </view>
+    </view>
+
+
+    <view wx:if="{{itemType === 'matching'}}" class="container-info-action">
+      <form report-submit bindsubmit="handleCancel">
+        <button plain form-type="submit">取消订单</button>
+      </form>
+      <form bindsubmit="takeAllSeats" report-submit="true">
+        <button plain form-type="submit">直接包车</button>
+      </form>
+    </view>
+    <view wx:if="{{item.state === 1 && itemType === 'succeed'}}" class="container-info-action">
+      <form report-submit bindsubmit="handleCancel">
+        <button plain form-type="submit">取消订单</button>
+      </form>
+    </view>
+    <view wx:if="{{item.state === 2}}" class="container-info-action">
+      <form report-submit bindsubmit="handleCancel">
+        <button plain form-type="submit">取消订单</button>
+      </form>
+      <form>
+        <button plain bindtap="bookOneMore">再拼一单</button>
+      </form>
+      
+    </view>
+    <view wx:if="{{item.state === 3}}" class="container-info-action">
+      <form report-submit bindsubmit="confirmKeepMatching">
+        <button plain form-type="submit">继续拼车</button>
+      </form>
+      <form report-submit bindsubmit="handleCancel">
+        <button plain form-type="submit">取消订单</button>
+      </form>
+    </view>
+    <view wx:if="{{item.state === 4}}" class="container-info-action">
+      <form report-submit bindsubmit="showComplainOption">
+        <button plain form-type="submit">投诉司机</button>
+      </form>
+    </view>
+    <view wx:if="{{item.state === 5}}" class="container-info-action">
+      <form report-submit bindsubmit="showComplainOption">
+        <button plain form-type="submit">投诉司机</button>
+      </form>
+      <form>
+        <button plain bindtap="handleArrival">确定到达</button>
+      </form>
+    </view>
+    <view wx:if="{{item.state === 6 }}" class="container-info-action">
+      <button plain bindtap="confirmEvaluation">确定评价</button>
+    </view>
+    <!--<view wx:if="{{item.state === 7}}" class="container-info-action">-->
+      <!--<button plain bindtap="showComplainOption">投诉司机</button>-->
+      <!--<button plain bindtap="handleArrival">确定到达</button>-->
+    <!--</view>-->
+    <!--<view wx:if="{{item.state === 9 && !isCommented}}" class="container-info-action">
+      <button plain bindtap="confirmEvaluation">确定评价</button>
+    </view>-->
+  </view>
+
+  <view wx:if="{{ready && !busy}}" class="container-action">
+
+    <view class="stv-container">
+        <view class="tab-bar">
+            <view wx:for="{{tabs}}" wx:key="unique" data-index=
+            "{{index}}" bindtap="handlerTabTap" class="tab {{activeTab==index?'tab-active':''}}" style="width: {{stv.windowWidth/tabs.length}}px">
+            <text>{{item}}</text>
+            </view>
+            <view style="width: {{stv.lineWidth}}px; left: {{stv.offset/tabs.length}}px" class="under-line {{!stv.tStart? 'withAnimate': ''}}"></view>
+        </view>
+        <view class="scroll-view">
+            <view bindtouchstart="handlerStart" catchtouchmove="handlerMove" bindtouchcancel="handlerCancel" bindtouchend="handlerEnd"  class="scroll-view-wrapper {{!stv.tStart? 'withAnimate': ''}}" style="left: -{{stv.offset}}px">
+
+                <view style="width: {{stv.windowWidth}}px;" class="one-scene">
+                    <scroll-view style="height:100%" scroll-y>
+                        <view class="container-action-body">
+                            <view class="content">
+                                <view class="info-line">
+                                    <view class="info-line-left">
+                                        <image mode="aspectFit" src="../../assets/pin1.png"></image>
+                                        <text>起点</text>
+                                    </view>
+                                    <text>{{item.start}}</text>
+                                </view>
+                                <view class="info-line">
+                                    <view class="info-line-left">
+                                        <image mode="aspectFit" src="../../assets/pin2.png"></image>
+                                        <text>终点</text>
+                                    </view>
+                                    <text>{{item.end}}</text>
+                                </view>
+                                <view class="info-line">
+                                    <view class="info-line-left">
+                                        <image mode="aspectFit" src="../../assets/peo.png"></image>
+                                        <text>订位</text>
+                                    </view>
+                                    <text>{{item.book}}个</text>
+                                </view>
+                                <view class="info-line">
+                                    <view class="info-line-left">
+                                        <image mode="aspectFit" src="../../assets/cash.png"></image>
+                                        <text>付款</text>
+                                    </view>
+                                    <text>{{item.price}}元</text>
+                                </view>
+                                <view class="info-line">
+                                    <view class="info-line-left">
+                                        <image mode="aspectFit" src="../../assets/clo.png"></image>
+                                        <text>出发</text>
+                                    </view>
+                                    <text>{{item.date}} {{item.time}}</text>
+                                </view>
+                            </view>
+                        </view>
+                    </scroll-view>
+                </view>
+
+
+
+                <view style="width: {{stv.windowWidth}}px;" class="one-scene">
+                    <scroll-view style="height:100%" scroll-y>
+                        <view class="container-action-body">
+                            <view class="content">
+                                <view class="content-service" bindtap="phoneCall" data-phone="{{cs.phone}}">
+                                    <image src="{{cs.avatar}}"></image>
+                                    <text>{{cs.name}}</text>
+                                    <text>点击头像拨打电话</text>
+                                </view>
+                            </view>
+                        </view>
+                    </scroll-view>
+                </view>
+
+                <view wx:if="{{item.passengers[0]}}" style="width: {{stv.windowWidth}}px;" class="one-scene">
+                    <scroll-view style="height:100%" scroll-y>
+                        <view class="container-action-body">
+                            <view class="content" wx:for="{{item.passengers}}" wx:for-item="passenger" wx:key="passenger">
+                                <view class="passenger-line">
+                                    <view class="passenger-line-left">
+                                        <image mode="aspectFit" src="{{passenger.avatar}}"></image>
+                                        <text>{{passenger.name}}</text>
+                                    </view>
+                                    <text wx:if="{{passenger.nickname}}">{{passenger.nickname}}</text>
+                                </view>
+                            </view>
+                        </view>
+                    </scroll-view>
+                </view>
+
+                <view wx:if="{{item.driver}}" style="width: {{stv.windowWidth}}px;" class="one-scene">
+                    <scroll-view style="height:100%" scroll-y>
+                        <view class="container-action-body">
+                            <view class="content">
+                                <scroll-view scroll-y class="driver-info">
+                                    
+                                    <view class="driver-car-image" style="background-image: url({{item.driver.img}});">
+                                        <view class="driver" bindtap="phoneCall" data-phone="{{item.driver.phone}}">
+                                            <view class="driver-footer">{{item.driver.name}}</view>
+                                            <view class="icon"><image class="icon" src="../../assets/pho.png"></image></view>
+                                            <view class="driver-footer">{{item.driver.phone}}</view>
+                                        </view>
+                                    </view>
+                                </scroll-view>
+                            </view>
+                        </view>
+                    </scroll-view>
+                </view>
+                
+            </view>
+        </view>
+    </view>
+
+
+    <view class="container-action-footer">
+      <view class="box">
+        <text>可选黄金时间为出发时间以提高拼车成功率</text>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,13 @@
+<!--pages/person/person.wxml-->
+<view class="container-wrap">
+    <view class="list-container">
+        <view wx:for="{{ items }}" wx:for-item="item" wx:for-index="i" wx:key="i" class="list-box" style="animation-duration: {{i * 300}}ms">
+            <button wx:if="{{item !== 'relogin'}}" bindtap="to" data-type="{{item}}" hover-class="item-press">
+                <view>{{ch[i]}}</view>
+            </button>
+            <button wx:if="{{item === 'relogin'}}" bindtap="relogin"  hover-class="item-press">
+                <view>{{ch[i]}}</view>
+            </button>
+        </view>
+    </view>
+</view>

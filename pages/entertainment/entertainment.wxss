@@ -1,0 +1,41 @@
+/* pages/entertainment/entertainment.wxss */
+.entertainment {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+.entertainment content {
+    width: 100%;
+}
+.entertainment-image {
+    width: 100%;
+}
+
+@keyframes comming {
+    0% {
+        transform: scale(0);
+    }
+    80% {
+        transform: scale(0);
+        
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+.entertainment button {
+    position: fixed;
+    border-radius: 50%;
+    line-height: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: aliceblue;
+    height: 150rpx;
+    width: 150rpx;
+    bottom: 200rpx;
+    right: 20rpx;
+    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.3);
+    background: #e1956D;
+    animation: comming 2s;
+}

@@ -1,0 +1,6 @@
+<!--pages/entertainment/entertainment.wxml-->
+
+<scroll-view scroll-y class="entertainment">
+    <image class="entertainment-image" mode="widthFix" src="../../assets/entertainment.png"></image>
+    <form report-submit bindsubmit="upload"><button form-type="submit">上传图片</button></form>
+</scroll-view>

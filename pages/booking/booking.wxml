@@ -1,0 +1,199 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="container-info">
+
+
+
+  
+    <view animation="{{ route }}" class="card">
+      <view class="location">
+        <view class="location-label">当前地区</view>
+        <picker mode="selector" bindchange="onLocationChange" value="{{location}}" range="{{location$}}" range-key="area">
+          <view hover hover-stay-time="50" hover-class="location-picker-press" class="location-picker">
+            {{location$[location].area}}
+            <image class="icon location-icon" src="../../assets/send.png" mode="aspectFit"></image>  
+          </view>
+        </picker>
+      </view>
+
+      <view class="route">
+        <picker mode="selector" bindchange="onStartChange" value="{{start}}" range="{{start$}}">
+          <view class="route-input">
+          <image class="icon" src="../../assets/pin1.png"></image>
+            {{start$[start] || '拿不到数据？请下拉刷新'}}
+          </view>
+        </picker>
+        <picker mode="selector" bindchange="onEndChange" value="{{end}}" range="{{end$}}">
+          <view class="route-input">
+          <image class="icon" src="../../assets/pin2.png"></image>
+            {{end$[end]}}
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <view animation="{{ time }}" class="card card2">
+      <view class="time-title">
+        <view class="time-label">选择拼车规模及出发时间</view>
+        <view class="time-help" bindtap="toHelp">使用说明</view>
+      </view>
+      <view class="time">
+        <view class="seat-selector">
+          <view class="seat-book">
+            <view class="selector-text">
+              <text>订位数量 :</text>
+            </view>
+            <picker mode="selector" bindchange="onBookChange" value="{{book}}" range="{{book$}}">
+              <view class="selector-line">
+                {{book$[book]}}
+              </view>
+            </picker>
+            <view class="selector-text selector-inline-text">
+                <text>个</text>
+            </view>
+          </view>
+          <view class="seat-scale">
+            <view class="selector-text">
+              <text>拼几人车 :</text>
+            </view>
+            <picker mode="selector" bindchange="onScaleChange" value="{{scale}}" range="{{scale$}}">
+              <view class="selector-line">
+                {{scale$[scale]}}
+              </view>
+            </picker>
+            <view class="selector-text selector-inline-text">
+                <text>人</text>
+            </view>
+          </view>
+        </view>
+        <view class="time-selector">
+          <view class="time-left">
+            <view class="selector-text">
+              <text>出发时间 :</text>
+            </view>
+          </view>
+          <view class="time-right">
+            <view>
+              <view bindtap="onTodayChange" class="selector-line">
+                {{today ? '今' : '明' }}
+              </view> 
+            </view>
+            <view class="selector-text selector-inline-text">
+              <text>天</text>
+            </view>
+            <picker mode="selector" bindchange="onHourChange" value="{{hour}}" range="{{hour$}}">
+              <view class="selector-line">
+                {{hour$[hour]}}
+              </view>
+            </picker>
+            <view class="selector-text selector-inline-text">
+              <text>时</text>
+            </view>
+            <picker mode="selector" bindchange="onMinuteChange" value="{{minute}}" range="{{minute$}}" range-key="minute">
+              <view class="selector-line">
+                {{minute$[minute].minute}}
+              </view>
+            </picker>
+            <view class="selector-text selector-inline-text">
+              <text>分</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!--card-info-->
+  </view>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <view animation="{{ focusing }}" class="container-action">
+    <view animation="{{ action }}">
+        <view class="route-action">
+            <view class="price-predict">
+                <view>
+                  <text class="prediction">拼车最低价格 {{priceLabel.average}} 元 ／ 人</text>
+                </view>
+                <view>
+                  <text class="prediction">路线价格 {{priceLabel.total}} 元</text>
+                </view>
+            </view>
+            <view class="main-button-group">
+                <button type="primary" bindtap="onRouteConfirm" hover-class="main-button-press">确定路线</button>
+            </view>
+        </view>
+
+        <view class="route-action">
+            <view class="route-tips">
+                <view>
+                <text class="prediction"> 当前订单须付 {{price}} 元</text>
+                </view>
+                <view>
+                </view>
+            </view>
+            <view class="coupons">
+                <picker wx:if="{{coupons$}}" bindchange="onCouponsChange" range="{{coupons$}}" range-key="text">
+                  {{detract !== 0 ? '已选择拼车券' : '选择拼车券'}} {{detract !== 0 ? coupons$[coupons].text : ''}}
+                </picker>
+                <text wx:else class="coupons-without">
+                  当前没有可用拼车券
+                </text>
+            </view>
+
+            <form bindsubmit="onItemConfirm" report-submit>
+            <view class="main-button-group">
+                <button type="primary" form-type="submit" hover-class="main-button-press">确定拼车</button>
+            </view>
+            <view class="second-button-group">
+                <button bindtap="onBack" plain hover-class="main-button-press">重新选择路线</button>
+            </view>
+            </form>
+        </view>
+
+        <view class="route-action">
+            <view class="price-predict">
+                <form bindsubmit="formSubmit" bindreset="formReset" class="phone-form">
+                  <input type="number" name="input" placeholder="请输入绑定手机号码" bindinput="onPhoneChange"/>
+                  <input type="number" name="input" placeholder="请输入验证码" bindinput="onValidChange"/>
+                  
+                  <view class="button-group">
+                      <button wx:if="{{seconds > 0}}" type="primary" plain bindtap="onValid" hover-class="main-button-press">
+                        {{ seconds }}
+                      </button>
+                      <button wx:else type="primary" plain bindtap="onValid" hover-class="main-button-press">
+                        获取验证码
+                      </button>
+                      <button type="primary" bindtap="onConfirmPhone" hover-class="main-button-press">
+                        确定
+                      </button>
+                  </view>
+                  <text>
+                    第一次拼车需要绑定手机号码，用于司机与您联系
+                  </text>
+                </form>
+            </view>
+            
+        </view>
+    </view>
+
+
+  </view>
+</view>

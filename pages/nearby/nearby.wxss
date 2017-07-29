@@ -1,0 +1,117 @@
+/* pages/nearby/nearby.wxss */
+.items-container {
+    padding: 30rpx;
+}
+.item-indication {
+    display: inline-block;
+    margin-bottom: 20rpx;
+    width: 100%;
+    padding: 0 0 10rpx 20rpx;
+    color: #FDFDFD;
+    font-size: 35rpx;
+}
+
+.item {
+    background: #FDFDFD;
+    width: 100%;
+    border-radius: 20rpx;
+    box-shadow: 1rpx 4rpx 20rpx 0 rgba(0, 0, 0, 0.4);
+}
+.item-content {
+    padding: 45rpx 40rpx;
+}
+.item-box {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.item-content .item-box {
+    margin-top: 30rpx;
+}
+.item-content .item-box:first-child {
+    margin-top: 0;
+}
+.item-text {
+    font-size: 30rpx;
+    color: #95989A;
+    display: block;
+}
+
+.item-back {
+    margin: 20rpx 10rpx;
+    height: 0;
+    overflow: hidden;
+    transition: height 0.4s cubic-bezier(0.04, 0.96, 0.47, 1.00);
+}
+
+
+.item-back-content {
+    padding: 0 20rpx;
+}
+
+.item-back-text {
+    font-size: 35rpx;
+    line-height: 70rpx;
+    color: #FDFDFD;
+    display: block;
+}
+.item-back-text button {
+    font-size: 35rpx;
+    line-height: 2;
+    color: #D1754D;
+}
+
+.item-back-text image {
+    height: 70rpx;
+    width: 70rpx;
+    border-radius: 50%;
+    margin-left: 30rpx;
+}
+.item-back-text image:nth-child(1) {
+    margin-left: 0;
+}
+
+@keyframes user-avatar {
+    from {
+        transform: translate(200px);
+        opacity: 0;
+    }
+    to {
+        transform: translate(0);
+        opacity: 1;
+    }
+}
+.user-avatar {
+    animation: user-avatar 0.5s ease-in-out;
+}
+.coupons-without {
+    display: block;
+    color: #FDFDFD;
+    line-height: 25rpx;
+    margin-left: 20rpx;
+    font-size: 30rpx;
+}
+.small-text {
+  font-size: 28rpx;
+}
+.error-text {
+    padding: 0 40rpx;
+    display: block;
+    line-height: 1.5;
+    text-align: center;
+    margin-top: 50rpx;
+    margin-right: 30rpx;
+}
+/*@keyframes book {
+    from {
+        opacity: 0;
+        transform: translate(0, -100%)
+    }
+    to {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
+}
+.book-item {
+    animation: book 0.3s ease;
+}*/

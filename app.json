@@ -1,0 +1,49 @@
+{
+  "pages":[
+    "pages/booking/booking",
+    "pages/help/help",
+    "pages/items/items",
+    "pages/nearby/nearby",
+    "pages/coupons/coupons",
+    "pages/person/person",
+    "pages/detail/detail",
+    "pages/bindPhone/bindPhone",
+    "pages/agreement/agreement",
+    "pages/about/about"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#D1754D",
+    "backgroundColor": "#D1754D",
+    "navigationBarTitleText": "大圣拼车",
+    "navigationBarTextStyle":"white",
+    "enablePullDownRefresh": true
+  },
+  "tabBar": {
+    "color": "#E0E0E0",
+    "selectedColor": "#FFFFFF",
+    "borderStyle": "white",
+    "backgroundColor": "#D1754D",
+    "list": [{
+      "pagePath": "pages/booking/booking",
+      "text": "拼车",
+      "iconPath": "assets/car2.png",
+      "selectedIconPath": "assets/car.png"
+    }, {
+      "pagePath": "pages/nearby/nearby",
+      "text": "附近",
+      "iconPath": "assets/people2.png",
+      "selectedIconPath": "assets/people.png"
+    }, {
+      "pagePath": "pages/items/items",
+      "text": "订单",
+      "iconPath": "assets/assignment2.png",
+      "selectedIconPath": "assets/assignment.png"
+    }, {
+      "pagePath": "pages/person/person",
+      "text": "个人",
+      "iconPath": "assets/person2.png",
+      "selectedIconPath": "assets/person.png"
+    }]
+  }
+}
